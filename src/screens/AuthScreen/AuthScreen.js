@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-import { StyleSheet, Dimensions, View, SafeAreaView, ScrollView } from "react-native";
+import { StyleSheet, View, SafeAreaView, ScrollView, Image } from "react-native";
 import { connect } from "react-redux";
-
+import { Navigation } from "react-native-navigation";
+import {mainRoot} from '../../routes/routes'
 import validate from "../../utils/validation";
-// import { tryAuth } from '../../store/actions/index';
+import { tryAuth } from '../../store/actions/index';
 
 import Login from "../../components/Auth/Login";
 import SignUp from "../../components/Auth/SignUp";
-
-let ScreenHeight = Dimensions.get("window").height;
 
 class AuthScreen extends Component {
   state = {
@@ -50,10 +49,6 @@ class AuthScreen extends Component {
     this.setState({ isLoginScreen: false });
   };
 
-  onModalCloseHandler = () => {
-    this.props.closeModal();
-  };
-
   updateInputState = (key, value) => {
     this.setState((prevState) => {
       return {
@@ -70,13 +65,11 @@ class AuthScreen extends Component {
     });
   };
 
-  onAuth = () => {};
-
   render() {
     let screenData = this.state.isLoginScreen ? (
       <Login
         onLoginSubmitClick={() =>
-          onAuth(
+          this.props.onAuth(
             {
               email: this.state.controls.email.value,
               password: this.state.controls.password.value,
@@ -84,7 +77,7 @@ class AuthScreen extends Component {
             "signin"
           )
         }
-        spinner={this.state.loading}
+        spinner={this.props.spinner}
         update={this.updateInputState}
         controls={this.state.controls}
         onSignClick={() => this.renderSignUp()}
@@ -92,7 +85,7 @@ class AuthScreen extends Component {
     ) : (
       <SignUp
         onSignSubmitClick={() =>
-          onAuth(
+          this.props.onAuth(
             {
               email: this.state.controls.email.value,
               username: this.state.controls.username.value,
@@ -101,7 +94,7 @@ class AuthScreen extends Component {
             "signup"
           )
         }
-        spinner={this.state.loading}
+        spinner={this.props.spinner}
         update={this.updateInputState}
         controls={this.state.controls}
         onLoginClick={() => this.renderLogin()}
@@ -109,13 +102,19 @@ class AuthScreen extends Component {
     );
 
     if (this.props.token != null) {
-      modal = null;
+      Navigation.setRoot(mainRoot)
     }
 
     return (
       <View style={styles.view}>
         <SafeAreaView>
           <ScrollView>
+            <View style={styles.logoWrapper}>
+              <Image
+                  style={styles.logo}
+                  source={require('../../assets/images/app_icon_white.png')}
+                />
+            </View>
               {screenData}
           </ScrollView>
         </SafeAreaView>
@@ -133,7 +132,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        // onAuth: (authData, authMode) => dispatch(tryAuth(authData, authMode)),
+        onAuth: (authData, authMode) => dispatch(tryAuth(authData, authMode)),
     };
 }
 
@@ -142,7 +141,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: '#1565c0'
-  }
+  },
+  logoWrapper: {
+    alignItems: 'center',
+    marginBottom: 20
+  },
+  logo: {
+    width: 80,
+    height: 80,
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);

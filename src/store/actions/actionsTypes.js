@@ -1,9 +1,5 @@
-export const SET_FOODS = 'SET_FOODS';
-export const CLEAR_FOODS = 'CLEAR_FOODS';
-
 export const AUTH_SET_INFO = 'AUTH_SET_INFO'
-export const AUTH_SET_TOKEN = 'AUTH_SET_TOKEN'
-export const SOCIAL_AUTH_SET_INFO = 'SOCIAL_AUTH_SET_INFO'
+
 export const LOGOUT = 'LOGOUT'
 
 export const LOADING_START = 'LOADING_START'

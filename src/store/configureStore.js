@@ -2,12 +2,10 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 import authReducer from './reducers/auth';
-import foodReducer from './reducers/food';
 import uiReducer from './reducers/ui';
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    foods: foodReducer,
     uiLoading: uiReducer
 });
 

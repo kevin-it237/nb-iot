@@ -7,7 +7,7 @@ export const mainRoot = {
             component: {
               name: 'nbiot.home'
             }
-          },
+          }
         ]
       }
     }
@@ -19,4 +19,4 @@ export const loginRoot = {
         name: 'nbiot.login'
       }
     }
-};
+}; 

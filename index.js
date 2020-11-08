@@ -9,12 +9,16 @@ const store = configureStore();
 import AuthScreen from './src/screens/AuthScreen/AuthScreen';
 import SplashScreen from './src/screens/SplashScreen/SplashScreen';
 import Main from './src/screens/Main/Main'
+import AccountScreen from './src/screens/AccountScreen/AccountScreen'
 
 
 /////// Register all Screens ///////
 
 // Splash Screen
 Navigation.registerComponent('nbiot.splash', () => SplashScreen);
+
+// Splash Screen
+Navigation.registerComponent('nbiot.profile', () => AccountScreen);
 
 // Login Screen
 Navigation.registerComponent('nbiot.login', () => (props) => (

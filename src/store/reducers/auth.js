@@ -12,9 +12,9 @@ const reducer = (state = initialState, action) => {
         case AUTH_SET_INFO:
             return {
                 ...state,
-                token: action.authData.idToken,
-                username: action.authData.displayName,
-                email: action.authData.email
+                token: action.authData?.idToken,
+                username: action.authData?.displayName,
+                email: action.authData?.email
             };
         case LOGOUT:
             return {

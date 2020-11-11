@@ -12,6 +12,12 @@ export const authSetData = (authData) => {
     }
 }
 
+export const clearAuth = () => {
+    return {
+        type: LOGOUT
+    }
+}
+
 export const authStartStoreData = (authData) => {
     return dispatch => {
         dispatch(authSetData(authData));

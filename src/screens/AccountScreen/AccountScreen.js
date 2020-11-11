@@ -4,11 +4,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import getTheme from '../../../native-base-theme/components';
 import material from '../../../native-base-theme/variables/material';
 import {loginRoot} from '../../routes/routes'
+import {clearAuth} from '../../store/actions/auth'
+import {useDispatch} from 'react-redux'
 import { Navigation } from "react-native-navigation";
 import { Container, Content, Card, CardItem, Text, Body, Button, StyleProvider } from "native-base";
 
 const AccountScreen = () => {
 
+    const dispatch = useDispatch()
     const [user, setUser] = useState({email: "", userName: ""})
 
     useEffect(() => {
@@ -28,6 +31,7 @@ const AccountScreen = () => {
     const logout= async () => {
         try {
           await AsyncStorage.clear()
+          dispatch(clearAuth())
           Navigation.setRoot(loginRoot)
         } catch(e) {
           // clear error

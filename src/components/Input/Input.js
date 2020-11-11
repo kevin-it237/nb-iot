@@ -6,12 +6,13 @@ export default class UserInput extends Component {
     render() {
         return (
             <View style={styles.inputWrapper}>
-                <Image source={this.props.source} style={styles.inlineImg} />
+                {this.props.source&&<Image source={this.props.source} style={styles.inlineImg} />}
                 <TextInput
-                    style={[styles.input, !this.props.valid && this.props.touched?styles.invalid:null]}
+                    style={[styles.input, this.props.customStyle, !this.props.valid && this.props.touched?styles.invalid:null]}
                     placeholder={this.props.placeholder}
                     secureTextEntry={this.props.secureTextEntry}
                     autoCorrect={this.props.autoCorrect}
+                    keyboardType={this.props.keyboardType === 'numeric' ? 'numeric': 'default'}
                     autoCapitalize={this.props.autoCapitalize}
                     returnKeyType={this.props.returnKeyType}
                     placeholderTextColor="white"
@@ -24,7 +25,7 @@ export default class UserInput extends Component {
 }
 
 UserInput.propTypes = {
-    source: PropTypes.number.isRequired,
+    source: PropTypes.number,
     placeholder: PropTypes.string.isRequired,
     secureTextEntry: PropTypes.bool,
     autoCorrect: PropTypes.bool,

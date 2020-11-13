@@ -1,7 +1,7 @@
 export const inputs = 
     {
         bandwidth: {
-            value: "52",
+            value: "1500",
             valid: true,
             label: "Bandwidth",
             validationRules: {
@@ -11,7 +11,7 @@ export const inputs =
             keyboardType: 'numeric'
         },
         numberSubcarrier: {
-            value: "5",
+            value: "12",
             valid: true,
             label: "Number of subcarrier",
             validationRules: {
@@ -21,7 +21,7 @@ export const inputs =
             keyboardType: 'numeric'
         },
         modCodDL: {
-            value: "8",
+            value: "",
             valid: true,
             label: "Mod & Cod scheme DL",
             validationRules: {
@@ -31,7 +31,7 @@ export const inputs =
             keyboardType: 'numeric'
         },
         modCodUL: {
-            value: "8",
+            value: "",
             valid: true,
             label: "Mod & Cod scheme UL",
             validationRules: {
@@ -41,7 +41,7 @@ export const inputs =
             keyboardType: 'numeric'
         },
         targetName: {
-            value: "jkjj",
+            value: "",
             valid: true,
             label: "Target name",
             validationRules: {
@@ -51,7 +51,7 @@ export const inputs =
             keyboardType: 'default'
         },
         targetType: {
-            value: "df",
+            value: "",
             valid: true,
             label: "Target type",
             validationRules: {
@@ -61,7 +61,7 @@ export const inputs =
             keyboardType: 'default'
         },
         targetArea: {
-            value: "646",
+            value: "",
             valid: true,
             label: "Target area",
             validationRules: {
@@ -71,7 +71,7 @@ export const inputs =
             keyboardType:'numeric'
         },
         population: {
-            value: "5666",
+            value: "",
             valid: true,
             label: "Population",
             validationRules: {

@@ -8,13 +8,17 @@ import {mainRoot} from '../../../routes/routes'
 import { Navigation } from "react-native-navigation";
 import {densityForm} from './densityProcedureForm'
 import { Container, Content,  Button, StyleProvider, Text, Card, CardItem, Body } from "native-base";
+import {densityPlanning} from '../../../utils/calculator'
 
 const DensityProcedure = (props) => {
 
     const [form, setForm] = useState(densityForm)
-    const [finalDevicesInCellSite, setFinalDevicesInCellSite] = useState(86)
-    const [finalDevicesInCell, setFinalDevicesInCell] = useState(8556)
-    const [finalNumberOfSite, setFinalNumberOfSite] = useState(564)
+    const [results, setResults] = useState({
+        finalDevicesInCellSite: "",
+        finalDevicesInCell: "",
+        finalTotalDevices: "",
+        finalNumberOfSite: ""
+    })
 
     updateInputState = (key, value) => {
         setForm({
@@ -30,6 +34,22 @@ const DensityProcedure = (props) => {
 
     const backToHome = () => {
         Navigation.setRoot(mainRoot)
+    }
+
+    const calculate = () => {
+        const res = densityPlanning(form)
+        if(res) {
+            const {finalDevicesInCellSite,
+                finalDevicesInCell,
+                finalTotalDevices,
+                finalNumberOfSite} = res
+            setResults({
+                finalDevicesInCellSite,
+                finalDevicesInCell,
+                finalTotalDevices,
+                finalNumberOfSite
+            })
+        }
     }
 
     const formInputs = []
@@ -56,13 +76,15 @@ const DensityProcedure = (props) => {
         }
     }
 
+    const {finalDevicesInCellSite, finalDevicesInCell, finalNumberOfSite, finalTotalDevices} = results
+
     return (
         <StyleProvider style={getTheme(material)}>
             <Container>
                 <Content style={styles.mainContainer} padder>
                     {formInputs}
                     <View style={styles.buttonsWrapper}>
-                        <Button style={styles.button} primary>
+                        <Button style={styles.button} primary onPress={calculate}>
                             <Text>Calculate</Text>
                         </Button>
                         <Button style={styles.button} primary onPress={backToHome}>
@@ -84,6 +106,14 @@ const DensityProcedure = (props) => {
                             <Body>
                                 <Text>Number of Device in a cell</Text>
                                 <Text style={{fontWeight: 'bold', marginTop: 15, fontSize: 20}}>{finalDevicesInCell}</Text>
+                            </Body>
+                        </CardItem>
+                    </Card>
+                    <Card style={{marginBottom: 10}}>
+                        <CardItem>
+                            <Body>
+                                <Text>Total Number of Devices</Text>
+                                <Text style={{fontWeight: 'bold', marginTop: 15, fontSize: 20}}>{finalTotalDevices}</Text>
                             </Body>
                         </CardItem>
                     </Card>

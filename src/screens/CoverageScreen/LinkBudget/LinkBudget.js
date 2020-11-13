@@ -8,7 +8,9 @@ import validate from "../../../utils/validation";
 import {propagationmodelRoute} from '../../../routes/routes'
 import { Navigation } from "react-native-navigation";
 import {trasmitterParam, receiverParam, additionalParam, pathLossParam} from './linkBudgetForm'
-import { Container, Content,  Button, StyleProvider, Text } from "native-base";
+import { Container, Content,  Button, StyleProvider, Text, Card, CardItem, Body } from "native-base";
+
+import {bilanDeLiaison} from '../../../utils/calculator'
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
@@ -19,6 +21,7 @@ const LinkBudget = (props) => {
     const [form2, setForm2] = useState(receiverParam)
     const [form3, setForm3] = useState(additionalParam)
     const [form4, setForm4] = useState(pathLossParam)
+    const [results, setResults] = useState(null)
 
     ///////////// FORM 1 //////////////
     // For dual inputs
@@ -99,11 +102,22 @@ const LinkBudget = (props) => {
         trasmitterParam: form1,
         receiverParam: form2,
         additionalParam: form3,
-        pathLossParam: form4
+        pathLossParam: form4,
+        results
     }
 
     const next = () => {
-        Navigation.push(props.componentId, propagationmodelRoute({params: data}))
+        if(results) {
+            Navigation.push(props.componentId, propagationmodelRoute({params: data}))
+        } else {
+            alert('Calculate before clicking on NEXT')
+        }
+    }
+
+    const calculate = () => {
+        const bilan = bilanDeLiaison(targetParams, form1, form2, form3)
+        console.log(bilan)
+        setResults(bilan)
     }
 
     const formInputsSetOne = []
@@ -250,7 +264,7 @@ const LinkBudget = (props) => {
                     {/* Transitter params */}
                     
                     {formInputsSetOne}
-                    <View style={styles.line}>
+                    {/* <View style={styles.line}>
                         <View style={styles.lineItemText}><Text>EIRP Per Subcarrier(dBm)</Text></View>
                         <View style={{flex: 1}}>
                             <Input
@@ -264,7 +278,7 @@ const LinkBudget = (props) => {
                                 value={form1.eirp.value}
                                 onChangeText={(val) => updateInputState('eirp', val)} />
                         </View>
-                    </View>
+                    </View> */}
 
                     {/* Receiver params */}
                     <View style={{marginTop: 25}}>
@@ -282,11 +296,19 @@ const LinkBudget = (props) => {
                     <View style={{marginTop: 25}}>
                         <Text style={{marginTop: 5, fontWeight: 'bold'}}>Path Loss Parameters</Text>
                     </View>
-                    {formInputsSetFour}
+                    {/* {formInputsSetFour} */}
+                    <Card style={{marginTop: 10}}>
+                        <CardItem>
+                            <Body>
+                                <Text style={{fontWeight: 'bold', fontSize: 17}}>MAPL</Text>
+                                <Text style={{fontWeight: 'bold', marginTop: 15, fontSize: 18}}>{results?.MAPL ? results.MAPL:""}</Text>
+                            </Body>
+                        </CardItem>
+                    </Card>
                     
                     {/* Form end here */}
                     <View style={styles.buttonsWrapper}>
-                        <Button style={styles.button} primary>
+                        <Button style={styles.button} primary onPress={calculate}>
                             <Text>Calculate</Text>
                         </Button>
                         <Button style={styles.button} primary onPress={next}>

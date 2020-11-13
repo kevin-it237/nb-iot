@@ -1,7 +1,7 @@
 export const additionalParam = 
 {
     frequency: {
-        value: "",
+        value: "1500",
         valid: true,
         label: "Frequency",
         validationRules: {
@@ -11,7 +11,7 @@ export const additionalParam =
         keyboardType:'numeric'
     },
     eNodeBheight: {
-        value: "",
+        value: "30",
         valid: true,
         label: "Height of eNodeB",
         validationRules: {
@@ -21,7 +21,7 @@ export const additionalParam =
         keyboardType:'numeric'
     },
     ueheight: {
-        value: "",
+        value: "1.5",
         valid: true,
         label: "Height of UE",
         validationRules: {
@@ -71,7 +71,7 @@ export const additionalParam =
     //     keyboardType:'numeric'
     // },
     propagationModel: {
-        value: "COST231",
+        value: "COST 231 HATA",
         valid: true,
         label: "Propagation Model",
         validationRules: {

@@ -22,7 +22,7 @@ export const densityForm =
     areaOfCellSite: {
         value: "",
         valid: true,
-        label: "Household density/km2",
+        label: "Area Of Cell Site",
         validationRules: {
             minLength: 1,
         },
@@ -47,7 +47,7 @@ export const densityForm =
             minLength: 1,
         },
         touched: false,
-        keyboardType:'default'
+        keyboardType:'numeric'
     },
     // numberOfDevicesInCell: {
     //     value: "",

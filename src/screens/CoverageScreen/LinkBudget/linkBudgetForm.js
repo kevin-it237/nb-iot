@@ -1,7 +1,7 @@
 export const trasmitterParam = 
     {
         maxTxPower: {
-            value: {dl: "", ul: ""},
+            value: {dl: "46", ul: "23"},
             valid: true,
             label: "Max Tx Power(dBm)",
             validationRules: {
@@ -9,26 +9,26 @@ export const trasmitterParam =
             },
             touched: false,
         },
-        rbToDistPower: {
-            value: {dl: "", ul: ""},
-            valid: true,
-            label: "RB to dist Power",
-            validationRules: {
-                minLength: 1,
-            },
-            touched: false,
-        },
-        subcarriersPower: {
-            value: {dl: "", ul: ""},
-            valid: true,
-            label: "Subcarriers Power(dBm)",
-            validationRules: {
-                minLength: 1,
-            },
-            touched: false,
-        },
+        // rbToDistPower: {
+        //     value: {dl: "", ul: ""},
+        //     valid: true,
+        //     label: "RB to dist Power",
+        //     validationRules: {
+        //         minLength: 1,
+        //     },
+        //     touched: false,
+        // },
+        // subcarriersPower: {
+        //     value: {dl: "", ul: ""},
+        //     valid: true,
+        //     label: "Subcarriers Power(dBm)",
+        //     validationRules: {
+        //         minLength: 1,
+        //     },
+        //     touched: false,
+        // },
         txAntennaGain: {
-            value: {dl: "", ul: ""},
+            value: {dl: "18", ul: "0"},
             valid: true,
             label: "Tx Antenna gain(dBi)",
             validationRules: {
@@ -37,7 +37,7 @@ export const trasmitterParam =
             touched: false,
         },
         txCableLoss: {
-            value: {dl: "", ul: ""},
+            value: {dl: "0.5", ul: "0"},
             valid: true,
             label: "Tx Cable Loss(dB)",
             validationRules: {
@@ -45,21 +45,21 @@ export const trasmitterParam =
             },
             touched: false,
         },
-        eirp: {
-            value: "",
-            valid: true,
-            label: "EIRP Per Subcarrier(dBm)",
-            validationRules: {
-                minLength: 1,
-            },
-            touched: false,
-        },
+        // eirp: {
+        //     value: "",
+        //     valid: true,
+        //     label: "EIRP Per Subcarrier(dBm)",
+        //     validationRules: {
+        //         minLength: 1,
+        //     },
+        //     touched: false,
+        // },
     };
 
 export const receiverParam = 
     {
         rxNoise: {
-            value: {dl: "", ul: ""},
+            value: {dl: "5", ul: "3"},
             valid: true,
             label: "Rx Noise Figure(dB)",
             validationRules: {
@@ -68,7 +68,7 @@ export const receiverParam =
             touched: false,
         },
         sinr: {
-            value: {dl: "", ul: ""},
+            value: {dl: "-12", ul: "-12"},
             valid: true,
             label: "SINR(dB)",
             validationRules: {
@@ -76,17 +76,17 @@ export const receiverParam =
             },
             touched: false,
         },
-        rxSensibility: {
-            value: {dl: "", ul: ""},
-            valid: true,
-            label: "Rx Sensibility(dB)",
-            validationRules: {
-                minLength: 1,
-            },
-            touched: false,
-        },
+        // rxSensibility: {
+        //     value: {dl: "", ul: ""},
+        //     valid: true,
+        //     label: "Rx Sensibility(dB)",
+        //     validationRules: {
+        //         minLength: 1,
+        //     },
+        //     touched: false,
+        // },
         rxCableLoss: {
-            value: {dl: "", ul: ""},
+            value: {dl: "0", ul: "-0.5"},
             valid: true,
             label: "Rx Cable Loss(dB)",
             validationRules: {
@@ -95,7 +95,7 @@ export const receiverParam =
             touched: false,
         },
         rxAntennaGain: {
-            value: {dl: "", ul: ""},
+            value: {dl: "0", ul: "18"},
             valid: true,
             label: "Rx Antenna Gain(dB)",
             validationRules: {
@@ -110,7 +110,7 @@ export const receiverParam =
 export const additionalParam = 
 {
     penLoss: {
-        value: "",
+        value: "20",
         valid: true,
         label: "Penetration Loss(dB)",
         validationRules: {
@@ -119,18 +119,36 @@ export const additionalParam =
         touched: false,
     },
     shadowFading: {
-        value: "",
+        value: "9.48",
         valid: true,
-        label: "Shadow Fading(dB)",
+        label: "Slow Fading(dB)",
         validationRules: {
             minLength: 1,
         },
         touched: false,
-    }
+    },
+    interferenceMargin: {
+        value: "0",
+        valid: true,
+        label: "Interference Margin",
+        validationRules: {
+            minLength: 1,
+        },
+        touched: false,
+    },
 };
     
 export const pathLossParam = 
 {
+    // pathLoss: {
+    //     value: "",
+    //     valid: true,
+    //     label: "Path Loss(dB)",
+    //     validationRules: {
+    //         minLength: 1,
+    //     },
+    //     touched: false,
+    // },
     mapl: {
         value: "",
         valid: true,
@@ -140,13 +158,4 @@ export const pathLossParam =
         },
         touched: false,
     },
-    pathLoss: {
-        value: "",
-        valid: true,
-        label: "Path Loss(dB)",
-        validationRules: {
-            minLength: 1,
-        },
-        touched: false,
-    }
 };

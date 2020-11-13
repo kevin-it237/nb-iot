@@ -23,6 +23,11 @@ export const loginRoot = {
     root: {
       component: {
         name: 'nbiot.login',
+        options: {
+          statusBar: {
+            backgroundColor: '#0f63bc'
+          }
+        },
         statusBar: {
           backgroundColor: '#0f63bc'
         },
@@ -72,7 +77,7 @@ export const linkbudgetRoute = (props) =>( {
   }
 })
 
-export const propagationmodelRoute = (props) =>( {
+export const propagationmodelRoute = (props) =>({
   component: {
     name: 'nbiot.propagationmodel',
     options: {

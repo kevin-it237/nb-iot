@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { StyleSheet, View, Picker } from 'react-native'
 import {useDispatch} from 'react-redux'
 import Input from '../../../components/Input/Input'
@@ -12,12 +12,18 @@ import { Container, Content,  Button, StyleProvider, Text, Card, CardItem, Body 
 
 const PropagationModel = (props) => {
 
-    const dispatch = useDispatch()
-
     const [form, setForm] = useState(additionalParam)
-    const [cellRadius, setCellRadius] = useState(565)
-    const [cellArea, setCellArea] = useState(565)
-    const [numberOfSites, setNumberOfSites] = useState(56)
+    const [finalResult, setFinalResult] = useState({
+        cellArea: "",
+        numberOfSites: "",
+        cellRadius: ""
+    })
+
+    const results = props.params.results
+
+    useEffect(() => {
+        
+    }, [])
 
     updateInputState = (key, value) => {
         setForm({
@@ -33,6 +39,16 @@ const PropagationModel = (props) => {
 
     const backToHome = () => {
         Navigation.setRoot(mainRoot)
+    }
+
+    const calculate = () => {
+        if(results) {
+            setFinalResult({
+                cellArea: results.AIR,
+                numberOfSites: results.eNODEB,
+                cellRadius: results.R
+            })
+        }
     }
 
     const formInputs = []
@@ -59,6 +75,8 @@ const PropagationModel = (props) => {
         }
     }
 
+    const {cellArea, cellRadius, numberOfSites} = finalResult
+
     return (
         <StyleProvider style={getTheme(material)}>
             <Container>
@@ -84,7 +102,7 @@ const PropagationModel = (props) => {
                         <CardItem>
                             <Body>
                                 <Text>Cell Radius</Text>
-                                <Text style={{fontWeight: 'bold', marginTop: 15, fontSize: 20}}>{cellRadius}</Text>
+                                <Text style={{fontWeight: 'bold', marginTop: 15, fontSize: 20}}>{`${cellRadius} km`}</Text>
                             </Body>
                         </CardItem>
                     </Card>
@@ -92,7 +110,7 @@ const PropagationModel = (props) => {
                         <CardItem>
                             <Body>
                                 <Text>Cell Area</Text>
-                                <Text style={{fontWeight: 'bold', marginTop: 15, fontSize: 20}}>{cellArea}</Text>
+                                <Text style={{fontWeight: 'bold', marginTop: 15, fontSize: 20}}>{`${cellArea} km2`}</Text>
                             </Body>
                         </CardItem>
                     </Card>
@@ -107,7 +125,7 @@ const PropagationModel = (props) => {
 
 
                     <View style={styles.buttonsWrapper}>
-                        <Button style={styles.button} primary>
+                        <Button style={styles.button} primary onPress={calculate}>
                             <Text>Calculate</Text>
                         </Button>
                         <Button style={styles.button} primary onPress={backToHome}>

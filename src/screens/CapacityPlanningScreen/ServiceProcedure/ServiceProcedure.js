@@ -9,12 +9,15 @@ import { Navigation } from "react-native-navigation";
 import {serviceForm} from './serviceProcedureForm'
 import { Container, Content,  Button, StyleProvider, Text, Card, CardItem, Body } from "native-base";
 
+import {servicePlanning} from '../../../utils/calculator'
+
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
 const ServiceProcedure = (props) => {
 
     const [form, setForm] = useState(serviceForm)
-    const [finalNumber, setFinalNumber] = useState(89556)
+    const [finalNumber, setFinalNumber] = useState("")
+    const [results, setResults] = useState(null)
 
     updateInputState = (key, value, option) => {
         setForm({
@@ -29,42 +32,117 @@ const ServiceProcedure = (props) => {
     };
 
     const planingResult = () => {
-        Navigation.push(props.componentId, planningResultsRoute({a: ""}))
+        if(results) {
+            Navigation.push(props.componentId, planningResultsRoute({results}))
+        } else {
+            alert('Calculate before moving to the next step')
+        }
+    }
+
+    const calculate = () => {
+        const res = servicePlanning(form)
+        const {totalPackets, NenodeB, data} = res
+        const newForm = {}
+        for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+                const element = data[key];
+                newForm[key] = {...form[key], value: {...form[key].value, np: element.np.toString()}}
+            }
+        }
+        setForm(newForm)
+        setFinalNumber(totalPackets)
+        setResults(res)
     }
 
     const formInputs = []
-    const formInputs2 = []
-    const formInputs3 = []
 
     for (const key in form) {
         if (form.hasOwnProperty(key)) {
             const element = form[key];
             const input = (
                 <View key={key} style={styles.line}>
-                    <View style={styles.lineItemText}><Text>{element.label}</Text></View>
-                    <View style={styles.lineItem}>
-                        <Input
-                            keyboardType='numeric'
-                            selectionColor='white'
-                            customStyle={styles.inputStyle}
-                            placeholder={""}
-                            autoCorrect={false}
-                            touched={element.touched}
-                            valid={element.valid}
-                            value={element.value.dl}
-                            onChangeText={(val) => updateInputState(key, val, 'ptf')} />
+                    <View style={styles.lineItemText}><Text style={styles.label}>{element.label}</Text></View>
+                    <View style={styles.lineWrap}>
+                        <View style={styles.lineItem}>
+                            <Text style={styles.smallLabel}>Transmiss° Freq at BH</Text>
+                            <Input
+                                keyboardType='numeric'
+                                selectionColor='white'
+                                customStyle={styles.inputStyle}
+                                placeholder={""}
+                                autoCorrect={false}
+                                touched={element.touched}
+                                valid={element.valid}
+                                value={element.value.ptf}
+                                onChangeText={(val) => updateInputState(key, val, 'ptf')} />
+                        </View>
+                        <View style={styles.lineItem}>
+                            <Text style={styles.smallLabel}>End Device Number</Text>
+                            <Input
+                                keyboardType='numeric'
+                                selectionColor='white'
+                                customStyle={styles.inputStyle}
+                                placeholder={""}
+                                autoCorrect={false}
+                                touched={element.touched}
+                                valid={element.valid}
+                                value={element.value.end}
+                                onChangeText={(val) => updateInputState(key, val, 'end')} />
+                        </View>
+                        <View style={styles.lineItem}>
+                            <Text style={styles.smallLabel}>Nb Pkts/day/device</Text>
+                            <Input
+                                keyboardType='numeric'
+                                selectionColor='white'
+                                customStyle={styles.inputStyle}
+                                placeholder={""}
+                                autoCorrect={false}
+                                touched={element.touched}
+                                valid={element.valid}
+                                value={element.value.npd}
+                                onChangeText={(val) => updateInputState(key, val, 'npd')} />
+                        </View>
                     </View>
-                    <View style={styles.lineItem}>
-                        <Input
-                            keyboardType='numeric'
-                            selectionColor='white'
-                            customStyle={styles.inputStyle}
-                            placeholder={""}
-                            autoCorrect={false}
-                            touched={element.touched}
-                            valid={element.valid}
-                            value={element.value.ul}
-                            onChangeText={(val) => updateInputState(key, val, 'end')} />
+                    <View style={styles.lineWrap}>
+                        <View style={styles.lineItem}>
+                            <Text style={styles.smallLabel}>Brustiness Margin</Text>
+                            <Input
+                                keyboardType='numeric'
+                                selectionColor='white'
+                                customStyle={styles.inputStyle}
+                                placeholder={""}
+                                autoCorrect={false}
+                                touched={element.touched}
+                                valid={element.valid}
+                                value={element.value.bm}
+                                onChangeText={(val) => updateInputState(key, val, 'bm')} />
+                        </View>
+                        <View style={styles.lineItem}>
+                            <Text style={styles.smallLabel}>Security Margin</Text>
+                            <Input
+                                keyboardType='numeric'
+                                selectionColor='white'
+                                customStyle={styles.inputStyle}
+                                placeholder={""}
+                                autoCorrect={false}
+                                touched={element.touched}
+                                valid={element.valid}
+                                value={element.value.sm}
+                                onChangeText={(val) => updateInputState(key, val, 'sm')} />
+                        </View>
+                        <View style={styles.lineItem}>
+                            <Text style={[styles.smallLabel, {fontWeight: 'bold'}]}>Number of Packets</Text>
+                            <Input
+                                keyboardType='numeric'
+                                selectionColor='white'
+                                customStyle={[styles.inputStyle, {backgroundColor: 'black'}]}
+                                placeholder={""}
+                                autoCorrect={false}
+                                touched={element.touched}
+                                valid={element.valid}
+                                value={element.value.np}
+                                onChangeText={(val) => updateInputState(key, val, 'np')} />
+                        </View>
                     </View>
                 </View>
             )
@@ -72,77 +150,6 @@ const ServiceProcedure = (props) => {
         }
     }
 
-    for (const key in form) {
-        if (form.hasOwnProperty(key)) {
-            const element = form[key];
-            const input = (
-                <View key={key} style={styles.line}>
-                    <View style={styles.lineItemText}><Text>{element.label}</Text></View>
-                    <View style={styles.lineItem}>
-                        <Input
-                            keyboardType='numeric'
-                            selectionColor='white'
-                            customStyle={styles.inputStyle}
-                            placeholder={""}
-                            autoCorrect={false}
-                            touched={element.touched}
-                            valid={element.valid}
-                            value={element.value.dl}
-                            onChangeText={(val) => updateInputState(key, val, 'npd')} />
-                    </View>
-                    <View style={styles.lineItem}>
-                        <Input
-                            keyboardType='numeric'
-                            selectionColor='white'
-                            customStyle={styles.inputStyle}
-                            placeholder={""}
-                            autoCorrect={false}
-                            touched={element.touched}
-                            valid={element.valid}
-                            value={element.value.ul}
-                            onChangeText={(val) => updateInputState(key, val, 'bm')} />
-                    </View>
-                </View>
-            )
-            formInputs2.push(input)
-        }
-    }
-
-    for (const key in form) {
-        if (form.hasOwnProperty(key)) {
-            const element = form[key];
-            const input = (
-                <View key={key} style={styles.line}>
-                    <View style={styles.lineItemText}><Text>{element.label}</Text></View>
-                    <View style={styles.lineItem}>
-                        <Input
-                            keyboardType='numeric'
-                            selectionColor='white'
-                            customStyle={styles.inputStyle}
-                            placeholder={""}
-                            autoCorrect={false}
-                            touched={element.touched}
-                            valid={element.valid}
-                            value={element.value.dl}
-                            onChangeText={(val) => updateInputState(key, val, 'sm')} />
-                    </View>
-                    <View style={styles.lineItem}>
-                        <Input
-                            keyboardType='numeric'
-                            selectionColor='white'
-                            customStyle={styles.inputStyle}
-                            placeholder={""}
-                            autoCorrect={false}
-                            touched={element.touched}
-                            valid={element.valid}
-                            value={element.value.ul}
-                            onChangeText={(val) => updateInputState(key, val, 'np')} />
-                    </View>
-                </View>
-            )
-            formInputs3.push(input)
-        }
-    }
 
     return (
         <StyleProvider style={getTheme(material)}>
@@ -153,26 +160,7 @@ const ServiceProcedure = (props) => {
                     </View>
 
                      {/* Form start here */}
-                    <View style={styles.line}>
-                        <View style={styles.lineItemText}><Text style={styles.boldText}>Service NB-IOT</Text></View>
-                        <View style={styles.lineItem}><Text style={styles.boldText}>Transmiss° Freq at BH</Text></View>
-                        <View style={styles.lineItem}><Text style={styles.boldText}>End Device Number</Text></View>
-                    </View>
                     {formInputs}
-
-                    <View style={styles.line}>
-                        <View style={styles.lineItemText}><Text style={styles.boldText}>Service NB-IOT</Text></View>
-                        <View style={styles.lineItem}><Text style={styles.boldText}>Nb Packets/ day/device</Text></View>
-                        <View style={styles.lineItem}><Text style={styles.boldText}>Brustiness Margin</Text></View>
-                    </View>
-                    {formInputs2}
-
-                    <View style={styles.line}>
-                        <View style={styles.lineItemText}><Text style={styles.boldText}>Service NB-IOT</Text></View>
-                        <View style={styles.lineItem}><Text style={styles.boldText}>Security Margin</Text></View>
-                        <View style={styles.lineItem}><Text style={styles.boldText}>Number of Packets</Text></View>
-                    </View>
-                    {formInputs3}
 
                     <Card style={{marginTop: 20}}>
                         <CardItem>
@@ -184,7 +172,7 @@ const ServiceProcedure = (props) => {
                     </Card>
 
                     <View style={styles.buttonsWrapper}>
-                        <Button style={styles.button} primary>
+                        <Button style={styles.button} primary onPress={calculate}>
                             <Text>Calculate</Text>
                         </Button>
                         <Button style={styles.button} primary onPress={planingResult}>
@@ -199,21 +187,26 @@ const ServiceProcedure = (props) => {
 
 const styles = StyleSheet.create({
     mainContainer: {
-        padding: 10
+        padding: 7
     },
     inputStyle: {
         borderColor: 'black',
         borderRadius: 10,
-        paddingLeft: 20,
+        paddingLeft: 10,
         backgroundColor: '#1565c0',
-        marginTop: 5
+        marginTop: 5,
     },
     button: {
         marginTop: 25,
         marginBottom: 25
     },
+    smallLabel: {
+        fontSize: 10,
+        marginBottom: 2
+    },
     label: {
-
+        fontWeight: 'bold',
+        fontSize: 16
     },
     inputWrapper: {
         marginTop: 20
@@ -229,17 +222,20 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     line: {
-        flexDirection: 'row',
         justifyContent: "space-between",
         marginTop: 20,
+    },
+    lineWrap: {
+        flexDirection: 'row',
+        justifyContent: "space-between",
+        marginTop: 10,
         alignItems: 'center',
     },
     lineItemText: {
-        width: (DEVICE_WIDTH / 3),
         marginRight: 5
     },
     lineItem: {
-        width: (DEVICE_WIDTH / 4)
+        width: (DEVICE_WIDTH / 3) - 20
     },
     boldText: {
         fontWeight: "bold"

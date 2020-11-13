@@ -43,17 +43,17 @@ export const bilanDeLiaison = (param, trasmitterParam, receiverParam, additional
     var expUL = (MAPL_UL - (136.20 + 3 + penLoss + interferenceMargin + shadowFading + parseFloat(rxCableLoss.ul) + parseFloat(rxCableLoss.dl)))/35.22
     var R_UL = Math.pow(10, expUL)
 
-    var R = R_DL > R_UL ? R_UL : R_DL
+    var R = R_DL > R_UL ? R_UL: R_DL
 
     // Calcul de l'air
-    var AIR = 9*Math.sqrt(3)/8*R*R
+    var AIR = (9*Math.sqrt(3)/8*R*R).toFixed(2)
     // Number of nodeB
 
-    var eNODEB = Math.floor(targetArea/AIR)
+    var eNODEB = Math.round(targetArea/AIR)
 
     return {
-        R: R_DL > R_UL ? R_UL : R_DL,
-        MAPL: MAPL_DL > MAPL_UL ? MAPL_UL : MAPL_DL,
+        R: R_DL > R_UL ? R_UL.toFixed(2) : R_DL.toFixed(2),
+        MAPL: MAPL_DL > MAPL_UL ? MAPL_UL.toFixed(2) : MAPL_DL.toFixed(2),
         AIR,
         eNODEB
     }
@@ -75,9 +75,39 @@ export const densityPlanning = (data) => {
     NeNodeB = Nap / Nap_cell
 
     return {
-        finalDevicesInCellSite: Math.floor(Nap_sec),
-        finalDevicesInCell: Math.floor(Nap_cell),
-        finalNumberOfSite: Math.floor(NeNodeB),
-        finalTotalDevices: Math.floor(Nap)
+        finalDevicesInCellSite: Math.round(Nap_sec),
+        finalDevicesInCell: Math.round(Nap_cell),
+        finalNumberOfSite: Math.round(NeNodeB),
+        finalTotalDevices: Math.round(Nap)
+    }
+}
+
+
+export const servicePlanning = (formData) => {
+    const data = {}
+    let totalPackets = 0
+    for (const key in formData) {
+        if (formData.hasOwnProperty(key)) {
+            const element = formData[key];
+            let {ptf, end, npd, bm, sm} = element.value
+            ptf = parseFloat(ptf);
+            end = parseFloat(end);
+            npd = parseFloat(npd);
+            bm = parseFloat(bm);
+            sm = parseFloat(sm);
+
+            // var Np = 24*ptf * (end*npd)*(1 + bm*0.1)*(1 + sm*0.1)
+            var Np = 31.68*ptf * (end*npd)
+            totalPackets += Np
+            data[key] = {...element['value'], np: Math.round(Np)}
+        }
+    }
+
+    const NenodeB = Math.round(totalPackets / 1800000)
+
+    return {
+        totalPackets,
+        NenodeB,
+        data
     }
 }

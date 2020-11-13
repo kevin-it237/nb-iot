@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { StyleSheet, View } from 'react-native'
 import getTheme from '../../../../native-base-theme/components';
 import material from '../../../../native-base-theme/variables/material';
@@ -8,12 +8,17 @@ import { Container, Content,  Button, StyleProvider, Text, Card, CardItem, Body 
 
 const PlaningResult = (props) => {
 
-    const [numberOfSites, setNumberOfSites] = useState(80)
-    const [finalNumber, setFinalNumber] = useState(82)
+    const [numberOfSites, setNumberOfSites] = useState("")
+    const [finalNumber, setFinalNumber] = useState("")
 
     const backToHome = () => {
         Navigation.setRoot(mainRoot)
     }
+
+    useEffect(() => {
+        setNumberOfSites(props.results.NenodeB)
+        setFinalNumber(props.results.NenodeB)
+    }, [])
 
     return (
         <StyleProvider style={getTheme(material)}>

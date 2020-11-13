@@ -1,7 +1,7 @@
 export const serviceForm = 
 {
     sensor: {
-        value: {ptf: "", end: "", npd: "", bm: "", sm: "", np: ""},
+        value: {ptf: "1", end: "5000", npd: "24", bm: "20", sm: "10", np: ""},
         valid: true,
         label: "Sensor",
         validationRules: {
@@ -10,7 +10,7 @@ export const serviceForm =
         touched: false
     },
     meteringWater: {
-        value: {ptf: "", end: "", npd: "", bm: "", sm: "", np: ""},
+        value: {ptf: "0.04", end: "600000", npd: "1", bm: "20", sm: "10", np: ""},
         valid: true,
         label: "Metering Water",
         validationRules: {
@@ -19,7 +19,7 @@ export const serviceForm =
         touched: false
     },
     meteringElectric: {
-        value: {ptf: "", end: "", npd: "", bm: "", sm: "", np: ""},
+        value: {ptf: "0.04", end: "600000", npd: "1", bm: "20", sm: "10", np: ""},
         valid: true,
         label: "Metering Electric",
         validationRules: {
@@ -28,7 +28,7 @@ export const serviceForm =
         touched: false
     },
     publicLightning: {
-        value: {ptf: "", end: "", npd: "", bm: "", sm: "", np: ""},
+        value: {ptf: "0.04", end: "10000", npd: "1", bm: "20", sm: "10", np: ""},
         valid: true,
         label: "Public Lightning",
         validationRules: {
@@ -37,7 +37,7 @@ export const serviceForm =
         touched: false
     },
     parkingManagement: {
-        value: {ptf: "", end: "", npd: "", bm: "", sm: "", np: ""},
+        value: {ptf: "2", end: "4000", npd: "48", bm: "20", sm: "10", np: ""},
         valid: true,
         label: "Parking Management",
         validationRules: {
@@ -46,7 +46,7 @@ export const serviceForm =
         touched: false
     },
     trackingLogistic: {
-        value: {ptf: "", end: "", npd: "", bm: "", sm: "", np: ""},
+        value: {ptf: "2", end: "1000", npd: "48", bm: "20", sm: "10", np: ""},
         valid: true,
         label: "Tracking Logistic",
         validationRules: {
@@ -55,7 +55,7 @@ export const serviceForm =
         touched: false
     },
     assetTracking: {
-        value: {ptf: "", end: "", npd: "", bm: "", sm: "", np: ""},
+        value: {ptf: "3", end: "1000", npd: "72", bm: "20", sm: "10", np: ""},
         valid: true,
         label: "Asset Tracking",
         validationRules: {
@@ -64,7 +64,7 @@ export const serviceForm =
         touched: false
     },
     agriculture: {
-        value: {ptf: "", end: "", npd: "", bm: "", sm: "", np: ""},
+        value: {ptf: "1", end: "1800", npd: "24", bm: "20", sm: "10", np: ""},
         valid: true,
         label: "Agriculture",
         validationRules: {
@@ -73,7 +73,7 @@ export const serviceForm =
         touched: false
     },
     wearables: {
-        value: {ptf: "", end: "", npd: "", bm: "", sm: "", np: ""},
+        value: {ptf: "0.5", end: "6000", npd: "12", bm: "20", sm: "10", np: ""},
         valid: true,
         label: "Wearables",
         validationRules: {
@@ -82,7 +82,7 @@ export const serviceForm =
         touched: false
     },
     homeAutomation: {
-        value: {ptf: "", end: "", npd: "", bm: "", sm: "", np: ""},
+        value: {ptf: "0.5", end: "2500", npd: "12", bm: "20", sm: "10", np: ""},
         valid: true,
         label: "Home Automation",
         validationRules: {

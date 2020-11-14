@@ -116,7 +116,6 @@ const LinkBudget = (props) => {
 
     const calculate = () => {
         const bilan = bilanDeLiaison(targetParams, form1, form2, form3)
-        console.log(bilan)
         setResults(bilan)
     }
 

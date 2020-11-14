@@ -154,7 +154,7 @@ export const customerRoute = {
     options: {
       topBar: {
         title: {
-          text: 'Service Planning Procedure'
+          text: 'Customer Space'
         }
       }
     }

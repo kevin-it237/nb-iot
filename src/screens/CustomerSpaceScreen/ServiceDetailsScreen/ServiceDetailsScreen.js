@@ -28,17 +28,17 @@ const ServiceDetails = (props) => {
 
                     <Card style={{marginBottom: 10, marginTop: 15}}>
                         <CardItem>
-                            <Body>
-                                <Text>Service</Text>
-                                <Text style={{fontWeight: 'bold', marginTop: 15}}>{"Service"}</Text>
+                            <Body style={{marginTop: 10, marginBottom: 10}}>
+                                <Text style={{fontWeight: 'bold'}}>Sensor</Text>
+                                <Text style={{alignSelf: 'flex-end', fontSize: 12, color: '#666'}}>Date: May 2020 - June 2020</Text>
                             </Body>
                         </CardItem>
                     </Card>
                     <Card style={{marginBottom: 10}}>
                         <CardItem>
-                            <Body>
-                                <Text>Service</Text>
-                                <Text style={{fontWeight: 'bold', marginTop: 15}}>{"Service"}</Text>
+                            <Body style={{marginTop: 10, marginBottom: 10}}>
+                                <Text style={{fontWeight: 'bold'}}>Sensor</Text>
+                                <Text style={{alignSelf: 'flex-end', fontSize: 12, color: '#666'}}>Date: Jan 2020 - Feb 2020</Text>
                             </Body>
                         </CardItem>
                     </Card>

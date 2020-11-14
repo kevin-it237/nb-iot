@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import { StyleSheet, View } from 'react-native'
 import getTheme from '../../../native-base-theme/components';
 import material from '../../../native-base-theme/variables/material';
-import {useDispatch} from 'react-redux'
 import {linkbudgetRoute} from '../../routes/routes'
 import { Navigation } from "react-native-navigation";
 import Input from '../../components/Input/Input'
@@ -11,8 +10,6 @@ import {inputs} from './form'
 import { Container, Content,  Button, StyleProvider, Text } from "native-base";
 
 const AccountScreen = (props) => {
-
-    const dispatch = useDispatch()
 
     const [form, setForm] = useState(inputs)
 
@@ -32,7 +29,11 @@ const AccountScreen = (props) => {
 
     const goToLinkBudget = () => {
         // save data to localstorage
-        Navigation.push(props.componentId, linkbudgetRoute({targetParams: form}));
+        if(form['targetArea'].value.length) {
+            Navigation.push(props.componentId, linkbudgetRoute({targetParams: form}));
+        } else {
+            alert('Target Area is required')
+        }
     }
    
     for (const key in form) {

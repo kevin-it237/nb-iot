@@ -5,6 +5,7 @@ import material from '../../../../native-base-theme/variables/material';
 import {mainRoot} from '../../../routes/routes'
 import { Navigation } from "react-native-navigation";
 import { Container, Content,  Button, StyleProvider, Text, Card, CardItem, Body } from "native-base";
+import Map from '../../../components/Map/Map'
 
 const PlaningResult = (props) => {
 
@@ -42,18 +43,19 @@ const PlaningResult = (props) => {
                         </CardItem>
                     </Card>
 
-                    <View style={styles.buttonsWrapper}>
+                    {/* <View style={styles.buttonsWrapper}>
                         <Button style={styles.button} primary>
                             <Text>Display</Text>
                         </Button>
                         <Button style={styles.button} primary onPress={backToHome}>
                             <Text>Home</Text>
                         </Button>
-                    </View>
+                    </View> */}
 
                     <Text style={{textAlign: 'center', fontWeight: 'bold'}}>Atoll NB-IOT Coverage</Text>
 
                     {/* Map here */}
+                    <Map finalNumber={finalNumber} />
                 </Content>
             </Container>
         </StyleProvider>

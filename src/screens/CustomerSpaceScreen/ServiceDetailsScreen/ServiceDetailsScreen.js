@@ -6,7 +6,7 @@ import material from '../../../../native-base-theme/variables/material';
 import {mainRoot} from '../../../routes/routes'
 import { Navigation } from "react-native-navigation";
 import { Container, Content,  Button, StyleProvider, Text, Card, CardItem, Body  } from "native-base";
-
+import { VictoryBar, VictoryChart, VictoryTheme, VictoryLine } from "victory-native";
 
 const ServiceDetails = (props) => {
 
@@ -87,6 +87,32 @@ const ServiceDetails = (props) => {
                             </Body>
                         </CardItem>
                     </Card>
+
+                    <View>
+                        <VictoryChart  theme={VictoryTheme.material}>
+                            <VictoryLine
+                                style={{
+                                    data: { stroke: "#c43a31" },
+                                    parent: { border: "1px solid #ccc"}
+                                }}
+                                data={[
+                                    { x: 0, y: 0 },
+                                    { x: "J", y: 15 },
+                                    { x: "F", y: 10 },
+                                    { x: "M", y: 14.3 },
+                                    { x: "A", y: 12.5 },
+                                    { x: "M", y: 13.1 },
+                                    { x: "J", y: 16 },
+                                    { x: "J", y: 11.2 },
+                                    { x: "A", y: 11 },
+                                    { x: "S", y: 12 },
+                                    { x: "O", y: 13 },
+                                    { x: "N", y: 13.5 },
+                                    { x: "D", y: 12.9 },
+                                ]}
+                            />
+                        </VictoryChart>
+                    </View>
 
                 </Content>
             </Container>

@@ -20,6 +20,7 @@ import ServiceProcedureScreen from './src/screens/CapacityPlanningScreen/Service
 import PlanningResultScreen from './src/screens/CapacityPlanningScreen/PlanningResult/PlanningResult'
 
 import CustomerSpace from './src/screens/CustomerSpaceScreen/CustomerSpaceScreen'
+import CustomerAuthScreen from './src/screens/CustomerSpaceScreen/CustomerSpaceAuth/CustomerSpaceAuth'
 import ServiceDetailsScreen from './src/screens/CustomerSpaceScreen/ServiceDetailsScreen/ServiceDetailsScreen'
 
 /////// Register all Screens ///////
@@ -103,6 +104,13 @@ Navigation.registerComponent('nbiot.customerspace', () => (props) => (
       <CustomerSpace {...props} />
   </Provider>
 ), () => CustomerSpace);
+
+//  customer auth screen
+Navigation.registerComponent('nbiot.customerspaceauth', () => (props) => (
+  <Provider store={store}>
+      <CustomerAuthScreen {...props} />
+  </Provider>
+), () => CustomerAuthScreen);
 
 //  customer space service details
 Navigation.registerComponent('nbiot.servicedetails', () => (props) => (

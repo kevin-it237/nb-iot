@@ -1,117 +1,75 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Navigation } from "react-native-navigation";
-import { Container, Content, Text, StyleProvider, Card, CardItem } from 'native-base';
+import { Container, Content, Text, StyleProvider, Card, CardItem, Button, Icon } from 'native-base';
 import {Image} from 'react-native'
 import { StyleSheet, TouchableOpacity, View, Dimensions } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import getTheme from '../../../native-base-theme/components';
 import material from '../../../native-base-theme/variables/material';
 import {serviceDetailsRoute} from '../../routes/routes'
-import Input from '../../components/Input/Input'
-import validate from "../../utils/validation";
-import Button from '../../components/Button/Button'
+import Modal from './Modal/Modal'
 
 const CustomerSpace = (props) => {
 
-    const [access, setAccess] = useState(false)
-    const [form, setForm] = useState({
-        customerCode: {
-            value: "",
-            valid: true,
-            label: "Enter your Code",
-            validationRules: {
-                minLength: 1,
-            },
-            touched: false,
-            keyboardType: 'numeric'
-        },
-    })
-
-    updateInputState = (key, value) => {
-        setForm({
-            ...form,
-            [key]: {
-                ...form[key],
-                value: value,
-                valid: validate(value, form[key].validationRules),
-                touched: true,
-            },
-        })
-    };
+    const [showModal, setShowModal] = useState(false)
+    const [services, setServices] = useState([])
 
     const serviceDetails = () => {
         Navigation.push(props.componentId, serviceDetailsRoute);
     }
 
-    const login = () => {
-        if(form['customerCode'].value.length) {
-            setAccess(true)
-        } else {
-            alert('Enter Your customer code')
+    const getData = async () => {
+        AsyncStorage.removeItem('services')
+        try {
+          const value = await AsyncStorage.getItem('services')
+          console.log(value)
+          if(value !== null) {
+            const services = JSON.parse(value)
+            setServices(services)
+          }
+        } catch(e) {
+          // error reading value
         }
     }
+
+    useEffect(() => {
+        getData()
+    }, [showModal])
     
     return (
         <StyleProvider style={getTheme(material)}>
-            <Container style={styles.mainContainer}>
-                <Content padder>
+            <View style={{flex: 1}}>
+                <Container style={styles.mainContainer}>
+                    <Modal
+                        setServices={setServices}
+                        closeModal={() => setShowModal(false)}
+                        showModal={showModal} 
+                    />
+                    <Content style={{flex: 1}} padder>
+                        {
+                            services.map((service, i) => (
+                                <TouchableOpacity activeOpacity={0.95} onPress={serviceDetails}>
+                                    <Card style={{marginTop: 15}}>
+                                        <CardItem cardBody>
+                                            <Image 
+                                                resizeMode={'cover'}
+                                                source={require('../../../src/assets/images/6.jpg')} 
+                                                style={{height: 200, width: null, flex: 1}} />
+                                        </CardItem>
+                                        <CardItem style={{textAlign: 'center', flex: 1, justifyContent: 'center'}}>
+                                            <Text style={{textTransform: 'uppercase', fontWeight: 'bold'}}>{service.meterType}</Text>
+                                        </CardItem>
+                                    </Card>
+                                </TouchableOpacity>
+                            ))
+                        }
 
-                {
-                    !access ?
-                    <View style={{padding: 10}}>
-                        <Text style={{fontSize: 20, marginBottom: 3, textAlign: 'center', marginTop: 30, textAlign: 'center'}}>Customer Space</Text>
-                        <View>
-                            <Input
-                                keyboardType={form['customerCode'].keyboardType}
-                                customStyle={styles.inputStyle}
-                                selectionColor='white'
-                                placeholder={form['customerCode'].label}
-                                autoCorrect={false}
-                                touched={form['customerCode'].touched}
-                                valid={form['customerCode'].valid}
-                                value={form['customerCode'].value}
-                                onChangeText={(val) => updateInputState('customerCode', val)} />
-                        </View>
-                        <View style={styles.loginbtnWrapper}>
-                            <Button 
-                                onClick={login}
-                                disabled={false}  
-                                btnStyle={styles.loginbtn} 
-                                title="LOGIN" />
-                        </View>
-                    </View>:
-                    <>
-                        <TouchableOpacity activeOpacity={0.95} onPress={serviceDetails}>
-                            <Card style={{marginTop: 15}}>
-                                <CardItem cardBody>
-                                    <Image 
-                                        resizeMode={'cover'}
-                                        source={require('../../../src/assets/images/6.jpg')} 
-                                        style={{height: 200, width: null, flex: 1}} />
-                                </CardItem>
-                                <CardItem style={{textAlign: 'center', flex: 1, justifyContent: 'center'}}>
-                                    <Text style={{textTransform: 'uppercase', fontWeight: 'bold'}}>Service 1</Text>
-                                </CardItem>
-                            </Card>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity activeOpacity={0.95} onPress={serviceDetails}>
-                            <Card style={{marginTop: 15}}>
-                                <CardItem cardBody>
-                                    <Image 
-                                        resizeMode={'cover'}
-                                        source={require('../../../src/assets/images/bg.jpg')} 
-                                        style={{height: 200, width: null, flex: 1}} />
-                                </CardItem>
-                                <CardItem style={{textAlign: 'center', flex: 1, justifyContent: 'center'}}>
-                                    <Text style={{textTransform: 'uppercase', fontWeight: 'bold'}}>Service 2</Text>
-                                </CardItem>
-                            </Card>
-                        </TouchableOpacity>
-                    </>
-                }
-
-                </Content>
-            </Container>
+                        <Button style={styles.addButton} rounded primary onPress={() => setShowModal(true)}>
+                            <Text style={{fontSize: 20}}>+</Text>
+                        </Button>
+                    </Content>
+                </Container>
+            </View>
         </StyleProvider>
     )
 }
@@ -119,6 +77,13 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
+    },
+    addButton: {
+        position: 'absolute',
+        right: 10,
+        bottom: 5,
+        zIndex: 10,
+        padding: 0
     },
     inputStyle: {
         borderColor: 'black',

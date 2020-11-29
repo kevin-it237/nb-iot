@@ -87,7 +87,7 @@ class SignUp extends Component {
                 <View style={styles.signup}>
                     <Text style={styles.signupText}>Déja inscrit ?</Text>
                     <TouchableOpacity style={{ marginRight: 5 }} onPress={this.props.onLoginClick}>
-                        <Text style={styles.signupText}>Connectez vous ici</Text>
+                        <Text style={[styles.signupText, {textDecorationLine: "underline"}]}>Connectez vous ici</Text>
                     </TouchableOpacity>
                 </View>
             </View>

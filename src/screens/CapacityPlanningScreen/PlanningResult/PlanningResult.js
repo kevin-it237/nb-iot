@@ -52,7 +52,7 @@ const PlaningResult = (props) => {
                         </Button>
                     </View> */}
 
-                    <Text style={{textAlign: 'center', fontWeight: 'bold'}}>Atoll NB-IOT Coverage</Text>
+                    <Text style={{textAlign: 'center', fontWeight: 'bold', marginTop: 20}}>Atoll NB-IOT Coverage</Text>
 
                     {/* Map here */}
                     <Map finalNumber={finalNumber} />

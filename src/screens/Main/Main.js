@@ -7,7 +7,7 @@ import {Image} from 'react-native'
 import { StyleSheet, BackHandler, TouchableOpacity } from 'react-native'
 import getTheme from '../../../native-base-theme/components';
 import material from '../../../native-base-theme/variables/material';
-import {profileRoute, coverageRoute, capacityPlanningRoute, customerRoute} from '../../routes/routes'
+import {profileRoute, coverageRoute, capacityPlanningRoute, customerAuthRoute} from '../../routes/routes'
 import {
     Menu,
     MenuOptions,
@@ -30,7 +30,7 @@ const Main = (props) => {
     }
 
     const custumerSpace = () => {
-        Navigation.push(props.componentId, customerRoute);
+        Navigation.push(props.componentId, customerAuthRoute);
     }
     
     return (

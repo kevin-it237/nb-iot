@@ -161,6 +161,19 @@ export const customerRoute = {
   }
 }
 
+export const customerAuthRoute = {
+  component: {
+    name: 'nbiot.customerspaceauth',
+    options: {
+      topBar: {
+        title: {
+          text: 'Customer Access'
+        }
+      }
+    }
+  }
+}
+
 export const serviceDetailsRoute = {
   component: {
     name: 'nbiot.servicedetails',

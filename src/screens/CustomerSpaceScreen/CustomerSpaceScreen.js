@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import getTheme from '../../../native-base-theme/components';
 import material from '../../../native-base-theme/variables/material';
 import {serviceDetailsRoute} from '../../routes/routes'
+import FAB from 'react-native-fab'
 import Modal from './Modal/Modal'
 
 const CustomerSpace = (props) => {
@@ -19,10 +20,9 @@ const CustomerSpace = (props) => {
     }
 
     const getData = async () => {
-        AsyncStorage.removeItem('services')
+        // AsyncStorage.removeItem('services')
         try {
           const value = await AsyncStorage.getItem('services')
-          console.log(value)
           if(value !== null) {
             const services = JSON.parse(value)
             setServices(services)
@@ -37,6 +37,7 @@ const CustomerSpace = (props) => {
     }, [showModal])
     
     return (
+        <>
         <StyleProvider style={getTheme(material)}>
             <View style={{flex: 1}}>
                 <Container style={styles.mainContainer}>
@@ -46,6 +47,7 @@ const CustomerSpace = (props) => {
                         showModal={showModal} 
                     />
                     <Content style={{flex: 1}} padder>
+                        {services.length===0&&<Text style={{textAlign: 'center', marginTop: 50}}>Click on the plus button to add a service.</Text>}
                         {
                             services.map((service, i) => (
                                 <TouchableOpacity activeOpacity={0.95} onPress={serviceDetails}>
@@ -58,19 +60,31 @@ const CustomerSpace = (props) => {
                                         </CardItem>
                                         <CardItem style={{textAlign: 'center', flex: 1, justifyContent: 'center'}}>
                                             <Text style={{textTransform: 'uppercase', fontWeight: 'bold'}}>{service.meterType}</Text>
+                                            <Text style={{textTransform: 'uppercase'}}>({service.meterNumber})</Text>
                                         </CardItem>
                                     </Card>
                                 </TouchableOpacity>
                             ))
                         }
-
+                      
+                        {/* 
                         <Button style={styles.addButton} rounded primary onPress={() => setShowModal(true)}>
                             <Text style={{fontSize: 20}}>+</Text>
-                        </Button>
+                        </Button> */}
                     </Content>
                 </Container>
             </View>
         </StyleProvider>
+        <View>
+            <FAB 
+                buttonColor="#0f63bc" 
+                iconTextColor="#FFFFFF" 
+                onClickAction={() => setShowModal(true)} 
+                visible={true} 
+                iconTextComponent={<Text>+</Text>} />
+
+        </View>
+        </>
     )
 }
 const DEVICE_WIDTH = Dimensions.get('window').width;

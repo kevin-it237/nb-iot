@@ -96,7 +96,7 @@ const Main = (props) => {
                                         style={{height: 200, width: null, flex: 1}} />
                                 </CardItem>
                                 <CardItem style={{textAlign: 'center', flex: 1, justifyContent: 'center'}}>
-                                    <Text style={{textTransform: 'uppercase', fontWeight: 'bold'}}>Custumer Space</Text>
+                                    <Text style={{textTransform: 'uppercase', fontWeight: 'bold'}}>Customer Space</Text>
                                 </CardItem>
                             </Card>
                         </TouchableOpacity>

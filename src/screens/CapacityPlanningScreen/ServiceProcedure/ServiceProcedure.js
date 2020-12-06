@@ -39,6 +39,14 @@ const ServiceProcedure = (props) => {
         }
     }
 
+    const storeData = async (value) => {
+        try {
+          await AsyncStorage.setItem('nb2', value)
+        } catch (e) {
+          // saving error
+        }
+    }
+
     const calculate = () => {
         const res = servicePlanning(form)
         const {totalPackets, NenodeB, data} = res
@@ -52,6 +60,7 @@ const ServiceProcedure = (props) => {
         setForm(newForm)
         setFinalNumber(totalPackets)
         setResults(res)
+        storeData(res.NenodeB)
     }
 
     const formInputs = []
@@ -176,7 +185,7 @@ const ServiceProcedure = (props) => {
                             <Text>Calculate</Text>
                         </Button>
                         <Button style={styles.button} primary onPress={planingResult}>
-                            <Text>Next</Text>
+                            <Text>Result</Text>
                         </Button>
                     </View>
                 </Content>

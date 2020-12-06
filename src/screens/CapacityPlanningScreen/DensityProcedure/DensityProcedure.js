@@ -4,7 +4,7 @@ import Input from '../../../components/Input/Input'
 import getTheme from '../../../../native-base-theme/components';
 import material from '../../../../native-base-theme/variables/material';
 import validate from "../../../utils/validation";
-import {mainRoot} from '../../../routes/routes'
+import {mainRoot, planningResultsRoute} from '../../../routes/routes'
 import { Navigation } from "react-native-navigation";
 import {densityForm} from './densityProcedureForm'
 import { Container, Content,  Button, StyleProvider, Text, Card, CardItem, Body } from "native-base";
@@ -36,6 +36,16 @@ const DensityProcedure = (props) => {
         Navigation.setRoot(mainRoot)
     }
 
+    const planingResult = () => {
+        if(results.finalDevicesInCellSite) {
+            Navigation.push(props.componentId, planningResultsRoute({
+                results: {totalPackets: 0, NenodeB: finalNumberOfSite, data: {}}
+            }))
+        } else {
+            alert('Calculate before moving to the next step')
+        }
+    }
+
     const calculate = () => {
         const res = densityPlanning(form)
         if(res) {
@@ -43,12 +53,12 @@ const DensityProcedure = (props) => {
                 finalDevicesInCell,
                 finalTotalDevices,
                 finalNumberOfSite} = res
-            setResults({
-                finalDevicesInCellSite,
-                finalDevicesInCell,
-                finalTotalDevices,
-                finalNumberOfSite
-            })
+                setResults({
+                    finalDevicesInCellSite,
+                    finalDevicesInCell,
+                    finalTotalDevices,
+                    finalNumberOfSite
+                })
         }
     }
 
@@ -125,6 +135,14 @@ const DensityProcedure = (props) => {
                             </Body>
                         </CardItem>
                     </Card>
+                     <View style={styles.buttonsWrapper}>
+                        {/* <Button style={styles.button} primary onPress={calculate}>
+                            <Text>Calculate</Text>
+                        </Button> */}
+                        <Button style={styles.button} primary onPress={planingResult}>
+                            <Text>Result</Text>
+                        </Button>
+                    </View>
                 </Content>
             </Container>
         </StyleProvider>
@@ -141,6 +159,11 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         backgroundColor: '#1565c0',
         marginTop: 5
+    },
+    buttonsWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
     button: {
         marginTop: 25,

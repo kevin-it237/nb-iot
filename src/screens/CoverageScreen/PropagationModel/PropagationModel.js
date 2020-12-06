@@ -8,6 +8,7 @@ import validate from "../../../utils/validation";
 import {mainRoot} from '../../../routes/routes'
 import { Navigation } from "react-native-navigation";
 import {additionalParam} from './propagationModelForm'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Container, Content,  Button, StyleProvider, Text, Card, CardItem, Body  } from "native-base";
 
 const PropagationModel = (props) => {
@@ -41,8 +42,17 @@ const PropagationModel = (props) => {
         Navigation.setRoot(mainRoot)
     }
 
+    const storeData = async (value) => {
+        try {
+          await AsyncStorage.setItem('nb1', JSON.stringify(value))
+        } catch (e) {
+          // saving error
+        }
+    }
+
     const calculate = () => {
         if(results) {
+            storeData(results.eNODEB)
             setFinalResult({
                 cellArea: results.AIR,
                 numberOfSites: results.eNODEB,

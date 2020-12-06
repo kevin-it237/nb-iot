@@ -5,6 +5,7 @@ import material from '../../../../native-base-theme/variables/material';
 import {mainRoot} from '../../../routes/routes'
 import { Navigation } from "react-native-navigation";
 import { Container, Content,  Button, StyleProvider, Text, Card, CardItem, Body } from "native-base";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Map from '../../../components/Map/Map'
 
 const PlaningResult = (props) => {
@@ -19,7 +20,20 @@ const PlaningResult = (props) => {
     useEffect(() => {
         setNumberOfSites(props.results.NenodeB)
         setFinalNumber(props.results.NenodeB)
+        getData()
     }, [])
+
+    const getData = async () => {
+        try {
+            let numbers = [props.results.NenodeB]
+            let nb1 = await AsyncStorage.getItem('nb1')
+            if(nb1 !== null) { numbers.push(parseInt(nb1))}
+            const finalNB = Math.max(...numbers)
+            setFinalNumber(finalNB)
+        } catch(e) {
+          // error reading value
+        }
+    }
 
     return (
         <StyleProvider style={getTheme(material)}>
@@ -52,7 +66,7 @@ const PlaningResult = (props) => {
                         </Button>
                     </View> */}
 
-                    <Text style={{textAlign: 'center', fontWeight: 'bold', marginTop: 20}}>Atoll NB-IOT Coverage</Text>
+                    <Text style={{textAlign: 'center', fontWeight: 'bold', marginTop: 20}}>NB-IOT Coverage</Text>
 
                     {/* Map here */}
                     <Map finalNumber={finalNumber} />

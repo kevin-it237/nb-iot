@@ -19,7 +19,7 @@ class CustomerSpaceAuth extends Component {
         phoneNumber: {
             label: "Phone Number",
             keyboardType: 'numeric',
-            value: "655891562",
+            value: "",
             valid: true,
             validationRules: {
                 minLength: 6,
@@ -29,7 +29,7 @@ class CustomerSpaceAuth extends Component {
         pinCode: {
             label: "Enter your PIN Code",
             keyboardType: 'numeric',
-            value: "1111",
+            value: "",
             valid: true,
             secureTextEntry: true,
             validationRules: {

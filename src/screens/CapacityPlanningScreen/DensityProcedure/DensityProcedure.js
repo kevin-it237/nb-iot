@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Picker } from 'react-native'
 import Input from '../../../components/Input/Input'
 import getTheme from '../../../../native-base-theme/components';
 import material from '../../../../native-base-theme/variables/material';
@@ -8,6 +8,7 @@ import {mainRoot, planningResultsRoute} from '../../../routes/routes'
 import { Navigation } from "react-native-navigation";
 import {densityForm} from './densityProcedureForm'
 import { Container, Content,  Button, StyleProvider, Text, Card, CardItem, Body } from "native-base";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {densityPlanning} from '../../../utils/calculator'
 
 const DensityProcedure = (props) => {
@@ -62,6 +63,15 @@ const DensityProcedure = (props) => {
         }
     }
 
+    const saveCity = async (value) => {
+        try {
+             await AsyncStorage.setItem('city', value)
+             console.log(value)
+        } catch(e) {
+          // error reading value
+        }
+    }
+
     const formInputs = []
 
     for (const key in form) {
@@ -82,7 +92,7 @@ const DensityProcedure = (props) => {
                         onChangeText={(val) => updateInputState(key, val)} />
                 </View>
             )
-            formInputs.push(input)
+            if(element.label !== 'City') formInputs.push(input)
         }
     }
 
@@ -92,6 +102,18 @@ const DensityProcedure = (props) => {
         <StyleProvider style={getTheme(material)}>
             <Container>
                 <Content style={styles.mainContainer} padder>
+                    <Text tyle={styles.label}>Select City</Text>
+                    <Picker
+                            selectedValue={form['city'].value}
+                            style={{ height: 50, width: 150 }}
+                            onValueChange={(itemValue, itemIndex) => {
+                                saveCity(itemValue)
+                                updateInputState('city', itemValue)
+                            }}
+                        >
+                            <Picker.Item label="Yaoundé" value="Yaoundé" />
+                            <Picker.Item label="Douala" value="Douala" />
+                    </Picker>
                     {formInputs}
                     <View style={styles.buttonsWrapper}>
                         <Button style={styles.button} primary onPress={calculate}>

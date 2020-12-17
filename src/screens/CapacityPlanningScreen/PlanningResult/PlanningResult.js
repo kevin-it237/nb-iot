@@ -12,10 +12,35 @@ const PlaningResult = (props) => {
 
     const [numberOfSites, setNumberOfSites] = useState("")
     const [finalNumber, setFinalNumber] = useState("")
+    const [city, setCity] = useState("")
+    const [latlng, setLatlng] = useState({
+        
+    })
 
     const backToHome = () => {
         Navigation.setRoot(mainRoot)
     }
+
+    useEffect(() => {
+        getCity()
+    }, [])
+
+
+    useEffect(() => {
+        if(city) {
+            if(city === 'Douala') {
+                setLatlng({
+                    latitude: 4.061536,
+                    longitude: 9.786072,
+                })
+            } else if(city === 'Yaoundé') {
+                setLatlng({
+                    latitude: 3.900,
+                    longitude: 11.48,
+                })
+            }
+        }
+    }, [city])
 
     useEffect(() => {
         setNumberOfSites(props.results.NenodeB)
@@ -30,6 +55,15 @@ const PlaningResult = (props) => {
             if(nb1 !== null) { numbers.push(parseInt(nb1))}
             const finalNB = Math.max(...numbers)
             setFinalNumber(finalNB)
+        } catch(e) {
+          // error reading value
+        }
+    }
+
+    const getCity = async () => {
+        try {
+            let city = await AsyncStorage.getItem('city')
+            setCity(city)
         } catch(e) {
           // error reading value
         }
@@ -69,7 +103,8 @@ const PlaningResult = (props) => {
                     <Text style={{textAlign: 'center', fontWeight: 'bold', marginTop: 20}}>NB-IOT Coverage</Text>
 
                     {/* Map here */}
-                    <Map finalNumber={finalNumber} />
+                    {Object.keys(latlng).length ? <Map latlng={latlng} finalNumber={finalNumber} />: <Text>Loading Map</Text> }
+                    
                 </Content>
             </Container>
         </StyleProvider>

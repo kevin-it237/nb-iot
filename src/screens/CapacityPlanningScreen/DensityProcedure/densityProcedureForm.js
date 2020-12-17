@@ -1,7 +1,7 @@
 export const densityForm = 
 {
     city: {
-        value: "",
+        value: "Yaoundé",
         valid: true,
         label: "City",
         validationRules: {
@@ -10,7 +10,7 @@ export const densityForm =
         touched: false
     },
     houseHoldDensity: {
-        value: "",
+        value: "17790",
         valid: true,
         label: "Household density/km2",
         validationRules: {
@@ -20,7 +20,7 @@ export const densityForm =
         keyboardType:'numeric'
     },
     areaOfCellSite: {
-        value: "",
+        value: "4.08",
         valid: true,
         label: "Area Of Cell Site",
         validationRules: {
@@ -30,7 +30,7 @@ export const densityForm =
         keyboardType:'numeric'
     },
     numberOfDevicesHousehold: {
-        value: "",
+        value: "3",
         valid: true,
         label: "Number Of Devices/ Household",
         validationRules: {
@@ -40,7 +40,7 @@ export const densityForm =
         keyboardType:'numeric'
     },
     numberOfHousehold: {
-        value: "",
+        value: "3255651",
         valid: true,
         label: "Number Of Household",
         validationRules: {

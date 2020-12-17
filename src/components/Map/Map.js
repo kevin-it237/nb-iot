@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet, Dimensions, Text } from 'react-native'
 import MapView, {Marker} from 'react-native-maps';
-import { loginRoot } from '../../routes/routes';
 
 const YDlatitude = 3.844119
 const YDlongitude = 11.501346
 
-const Map = ({finalNumber}) => {
+const Map = ({finalNumber, latlng}) => {
     const [markers, setMarkers] = useState([ 
-        // 3.799119 => 3.9000  && 11.48 =>  11.591346
+        // 3.799119 => 3.9000  && 11.48 =>  11.591346      0.045 0.09
         {   
-            latlng: {
-                latitude: 3.900,
-                longitude: 11.48,
-            },
+            latlng: latlng,
             title: "eNodeB",
             description: "eNobeB in the NB-IOT planification"
         }
@@ -25,25 +21,27 @@ const Map = ({finalNumber}) => {
 
     useEffect(() => {
         let markers = []
-        for (let index = 1; index <= finalNumber; index++) {
-            let latitude = between(3.799119, 3.9)
-            let longitude = between(11.48, 11.591346)
-            markers.push({   
-                latlng: {latitude, longitude},
-                title: "eNodeB",
-                description: "eNobeB in the NB-IOT planification"
-            })
+        if(Object.keys(latlng).length) {
+            for (let index = 1; index <= finalNumber; index++) {
+                let latitude = between(latlng.latitude - 0.09, latlng.latitude + 0.045)
+                let longitude = between(latlng.longitude - 0.02, latlng.longitude + 0.06)
+                markers.push({   
+                    latlng: {latitude, longitude},
+                    title: "eNodeB",
+                    description: "eNobeB in the NB-IOT planification"
+                })
+            }
+            setMarkers(markers)
         }
-        setMarkers(markers)
-    }, [finalNumber])
+    }, [finalNumber, latlng])
 
 
     return (
             <MapView
                 style={styles.map}
                 initialRegion={{
-                    latitude: 3.844119,
-                    longitude: 11.501346,
+                    latitude: latlng.latitude,
+                    longitude: latlng.longitude,
                     latitudeDelta: 0.0822,
                     longitudeDelta: 0.0821,
                 }}

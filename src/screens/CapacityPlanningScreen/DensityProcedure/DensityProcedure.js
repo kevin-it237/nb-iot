@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { StyleSheet, View, Picker } from 'react-native'
 import Input from '../../../components/Input/Input'
 import getTheme from '../../../../native-base-theme/components';
@@ -20,6 +20,10 @@ const DensityProcedure = (props) => {
         finalTotalDevices: "",
         finalNumberOfSite: ""
     })
+
+    useEffect(() => {
+        saveCity('Yaoundé')
+    }, [])
 
     updateInputState = (key, value) => {
         setForm({
